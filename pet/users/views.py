@@ -1,23 +1,25 @@
-from django.shortcuts import render
-
-# from .forms import CustomUserUpdateForm
 # from .models import CustomUser
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-# from django.urls import reverse_lazy
-# from django.views.generic.edit import UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView, UpdateView
 
-# Create your views here.
+from .forms import UserUpdateForm
+
+User = get_user_model()
+
+
 @login_required
 def profile_view(request):
     return render(request, 'account/profile.html')
 
 
-# class CustomUserUpdateView(UpdateView):
-#     model = CustomUser
-#     form_class = CustomUserUpdateForm
+class UserUpdateView(UpdateView):
+    model = User
+    form_class = UserUpdateForm
 
 
-# class CustomUserDeleteView(DeleteView):
-#     model = CustomUser
-#     success_url = reverse_lazy('account_signup')
+class UserDeleteView(DeleteView):
+    model = User
+    success_url = reverse_lazy('account_signup')
